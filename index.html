@@ -293,6 +293,206 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://briancai.github.io/2019/01/07/RESTfulAPIBasic/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Brian Cai">
+      <meta itemprop="description" content="Brian的个人站，专注数学、编程以及新的技术">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/07/RESTfulAPIBasic/" class="post-title-link" itemprop="url">RESTful接口设计基础</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-07 22:35:00 / Modified: 23:34:49" itemprop="dateCreated datePublished" datetime="2019-01-07T22:35:00+08:00">2019-01-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/technique/" itemprop="url" rel="index"><span itemprop="name">technique</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>(本文整理自网络)</p>
+<p>API(Application Programming Interface， 应用程序编程接口)是一组规则和机制，一个应用程序或组件通过这些规则和机制与其他组件进行交互。API可以以一种方便的格式(例如JSON或XML)返回应用程序所需的数据。</p>
+<p><img src="/2019/01/07/RESTfulAPIBasic/api_example.png" alt="API and Json Data"> </p>
+<h1 id="什么是RESTful"><a href="#什么是RESTful" class="headerlink" title="什么是RESTful"></a>什么是RESTful</h1><p>RESTful是一种推荐的API协议格式。</p>
+<p>REST是一种架构风格，RESTful是对它的描述。也就是说，如果后端服务器具有REST API，并且您(从网站/应用程序)向该API发出客户端请求，那么您的客户端就是RESTful的。</p>
+<h1 id="API举例"><a href="#API举例" class="headerlink" title="API举例"></a>API举例</h1><p>比如， GitHub有自己的API，在这个API的帮助下，您可以在开发应用程序时获得关于用户、他们的存储库和其它有用的信息。您可以在项目中使用和操作这些数据。</p>
+<p>我们使用下面的命令，调用它的API来获取数据：</p>
+<p><img src="/2019/01/07/RESTfulAPIBasic/request_github_api.png" alt="github API"> </p>
+<p>下图是上述API调用的返回结果：</p>
+<p><img src="/2019/01/07/RESTfulAPIBasic/github_response.png" alt="github API response"> </p>
+<h1 id="REST是如何工作的？"><a href="#REST是如何工作的？" class="headerlink" title="REST是如何工作的？"></a>REST是如何工作的？</h1><p>RESTful API的最佳实践可以归结为四个基本操作:</p>
+<p>返回列表数据;<br>创建新的数据;<br>更新数据;<br>删除数据.</p>
+<p>REST严重依赖HTTP。上述每种数据操作，使用对应的HTTP方法:</p>
+<p>GET    - 获取数据<br>POST   - 创建数据<br>PUT    - 更新（修改）数据<br>DELETE - 删除数据</p>
+<p>这些操作叫做CRUD，即我们常说的“增、查、改、删”。</p>
+<p>下表描述了HTTP方法和对应的数据库操作：</p>
+<p><img src="/2019/01/07/RESTfulAPIBasic/curd.png" alt="CURD"> </p>
+<p>每个请求都有HTTP状态码。有很多状态返回码，但通常都分成5大类。状态码的第一位数字表示它的分类：</p>
+<pre><code>1xx - 信息类;
+2xx - 成功;
+3xx - 跳转;
+4xx - 客户端错误;
+5xx - 服务器错误.
+</code></pre><h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>关于REST API版本方面的考虑，请参考下面的文章：</p>
+<p><a href="Don’t do it the following way:">Versioning REST Service</a></p>
+<h1 id="RESTful架构设计"><a href="#RESTful架构设计" class="headerlink" title="RESTful架构设计"></a>RESTful架构设计</h1><p>REST是从资源（数据）操作的角度来设计API，对每个资源，我们可以叫做endpoint。</p>
+<p>这些资源有独立的，也有相关的。</p>
+<p>比如独立数据：</p>
+<p>GET /users - 获取所有user数据<br>GET /users/123 - 获取id = 123的user数据<br>GET /posts - 获取所有post数据</p>
+<p>也可以是相关数据：</p>
+<p>GET /users/123/projects - 获取id = 123的user的所有的project</p>
+<p>下面看一下POST方法：</p>
+<p>POST /users<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  “first_name”: “Vasyl”,</span><br><span class="line">  “last_name”: “Redka”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>POST方法用于创建数据，通常会在Body里上传需要创建的数据。在成功创建后，返回的json数据，通常会带上创建好的数据的id。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  “id”: “<span class="number">1</span>”,</span><br><span class="line">  “first_name”: “Vasyl”,</span><br><span class="line">  “last_name”: “Redka”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>创建成功的返回码，通常是201（成功创建）。</p>
+<p>下面看一下PUT。PUT用来修改已有的数据，因此通常需要传入endpoint对应数据的id。</p>
+<p>PUT /users/123 - 更还id = 123的user的数据</p>
+<p>如果成功，则返回200。</p>
+<p>最后，看一下DELETE，通常用来表示删除数据库中的数据。</p>
+<p>DELETE /users/123 - 删除id = 123的user</p>
+<p>如果成功，则返回200。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://briancai.github.io/2018/09/11/RulePattern/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -550,7 +750,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-06 21:40:52" itemprop="dateModified" datetime="2019-01-06T21:40:52+08:00">2019-01-06</time>
+                <time title="Modified: 2019-01-07 22:35:51" itemprop="dateModified" datetime="2019-01-07T22:35:51+08:00">2019-01-07</time>
               
             
           </span>
@@ -1073,7 +1273,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1109,15 +1309,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
